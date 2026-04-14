@@ -30,8 +30,10 @@ export default function AuthPage() {
         },
       });
       if (error) throw error;
-    } catch (err) {
-      toast.error("Sign in failed. Please try again.");
+    } catch (err: unknown) {
+      console.error("Google sign-in error:", err);
+      const message = err instanceof Error ? err.message : "Sign in failed. Please try again.";
+      toast.error(message);
       setLoading(false);
     }
   };
