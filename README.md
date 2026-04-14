@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Nova — AI Expense Tracker 🌟
 
 > Your money. Understood.
@@ -55,7 +55,7 @@
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
+git clone
 cd "expense tracker"
 npm install
 ```
@@ -142,12 +142,6 @@ All responses: `{ success: boolean, data: any, error?: string }`
 
 ---
 
-## 🔗 Live Demo
-
-> Coming soon
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -199,15 +193,8 @@ expense tracker/
 
 ---
 
-## 📄 License
-
-MIT © 2024 Nova
-
----
-
 <div align="center">
   Built with 💜 using Next.js, Supabase & Google Gemini
 </div>
 =======
-# Nova--expense-Tracker
->>>>>>> 3b5435f8c250253d6200f35b02df9d17c374e446
+# Nova--expense-Track
