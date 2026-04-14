@@ -22,7 +22,7 @@ export default function AuthPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
@@ -30,6 +30,9 @@ export default function AuthPage() {
         },
       });
       if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      }
     } catch (err: unknown) {
       console.error("Google sign-in error:", err);
       const message = err instanceof Error ? err.message : "Sign in failed. Please try again.";
