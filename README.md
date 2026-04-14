@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Nova — AI Expense Tracker 🌟
 
 > Your money. Understood.
@@ -207,3 +208,6 @@ MIT © 2024 Nova
 <div align="center">
   Built with 💜 using Next.js, Supabase & Google Gemini
 </div>
+=======
+# Nova--expense-Tracker
+>>>>>>> 3b5435f8c250253d6200f35b02df9d17c374e446
