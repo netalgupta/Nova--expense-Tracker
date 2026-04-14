@@ -1,4 +1,5 @@
 "use client";
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 interface SkeletonProps {
@@ -6,14 +7,15 @@ interface SkeletonProps {
   rounded?: "sm" | "md" | "lg" | "full";
   height?: string;
   width?: string;
+  style?: CSSProperties;
 }
 
-export function Skeleton({ className, rounded = "md", height, width }: SkeletonProps) {
+export function Skeleton({ className, rounded = "md", height, width, style }: SkeletonProps) {
   const roundedMap = { sm: "rounded", md: "rounded-lg", lg: "rounded-2xl", full: "rounded-full" };
   return (
     <div
       className={cn("shimmer", roundedMap[rounded], className)}
-      style={{ height, width }}
+      style={{ height, width, ...style }}
     />
   );
 }

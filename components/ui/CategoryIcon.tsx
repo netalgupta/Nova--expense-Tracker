@@ -35,7 +35,6 @@ export default function CategoryIcon({ category, size = "md", showLabel = false,
           background: selected ? `${cat.color}33` : "rgba(255,255,255,0.06)",
           borderColor: selected ? cat.color : "transparent",
           border: selected ? `1.5px solid ${cat.color}` : "1.5px solid rgba(255,255,255,0.08)",
-          ringColor: cat.color,
         }}
       >
         <span role="img" aria-label={cat.label}>{cat.emoji}</span>

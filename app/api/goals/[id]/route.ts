@@ -19,9 +19,10 @@ async function getAuthUser(req: NextRequest) {
 
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<ApiResponse<Goal>>> {
     try {
+        const { id } = await context.params;
         const user = await getAuthUser(req);
         if (!user) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
 
@@ -35,7 +36,7 @@ export async function PUT(
             const { data: goal } = await supabase
                 .from("goals")
                 .select("saved_amount, target_amount")
-                .eq("id", params.id)
+                .eq("id", id)
                 .eq("user_id", user.id)
                 .single();
 
@@ -56,7 +57,7 @@ export async function PUT(
         const { data, error } = await supabase
             .from("goals")
             .update({ saved_amount: newSavedAmount })
-            .eq("id", params.id)
+            .eq("id", id)
             .eq("user_id", user.id)
             .select()
             .single();
