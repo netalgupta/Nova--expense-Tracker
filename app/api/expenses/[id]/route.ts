@@ -17,13 +17,18 @@ async function getAuthUser(req: NextRequest) {
     return user;
 }
 
+// ✅ FIXED PUT
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<ApiResponse<Expense>>> {
     try {
+        const { id } = await context.params;
+
         const user = await getAuthUser(req);
-        if (!user) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        if (!user) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
 
         const body = await req.json();
         const supabase = getServiceRoleClient();
@@ -41,13 +46,15 @@ export async function PUT(
                 recurring_interval: body.recurring_interval || null,
                 date: body.date,
             })
-            .eq("id", params.id)
+            .eq("id", id)
             .eq("user_id", user.id)
             .select()
             .single();
 
         if (error) throw error;
-        if (!data) return NextResponse.json({ success: false, error: "Not found" }, { status: 404 });
+        if (!data) {
+            return NextResponse.json({ success: false, error: "Not found" }, { status: 404 });
+        }
 
         return NextResponse.json({ success: true, data });
     } catch (error) {
@@ -58,22 +65,29 @@ export async function PUT(
     }
 }
 
+// ✅ FIXED DELETE
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<ApiResponse<null>>> {
     try {
+        const { id } = await context.params;
+
         const user = await getAuthUser(req);
-        if (!user) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        if (!user) {
+            return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+        }
 
         const supabase = getServiceRoleClient();
+
         const { error } = await supabase
             .from("expenses")
             .delete()
-            .eq("id", params.id)
+            .eq("id", id)
             .eq("user_id", user.id);
 
         if (error) throw error;
+
         return NextResponse.json({ success: true, data: null });
     } catch (error) {
         return NextResponse.json(
